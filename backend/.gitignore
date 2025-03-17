@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+
+# Virtual environment
+.venv/
+
+# FastAPI & SQLAlchemy
+instance/
+db.sqlite3  # Ignore SQLite DB (if used for testing)
+
+# Logs & Temp Files
+*.log
+logs/
+*.pid
+*.swp
+*.swo
+*.DS_Store
+
+# Alembic migrations (compiled files)
+migrations/versions/*.pyc
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
