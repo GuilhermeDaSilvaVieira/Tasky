@@ -1,5 +1,6 @@
 from datetime import datetime
-from app.db.models import TaskBase
+
+from app.db.models.task import TaskBase
 
 
 class TaskCreate(TaskBase):
