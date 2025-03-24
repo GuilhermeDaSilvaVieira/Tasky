@@ -26,6 +26,19 @@ def read_task(session: Session, id: int) -> Task | None:
     return session.get(Task, id)
 
 
+def read_subtasks(
+    session: Session,
+    parent_id: int,
+    offset: int = 0,
+    limit: Annotated[int, Query(le=100)] = 100,
+) -> list[Task]:
+    return list(
+        session.exec(
+            select(Task).where(Task.parent_id == parent_id).offset(offset).limit(limit)
+        ).all()
+    )
+
+
 def update_task(session: Session, id: int, task: TaskUpdate) -> Task | None:
     db_task = session.get(Task, id)
     if db_task:

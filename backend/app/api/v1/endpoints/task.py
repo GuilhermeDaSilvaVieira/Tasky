@@ -2,7 +2,14 @@ from fastapi import APIRouter, HTTPException, status
 
 from app.api.v1.schemas.task import TaskCreate, TaskResponse, TaskUpdate
 from app.core.dependencies import SessionDep
-from app.crud.task import create_task, delete_task, read_task, read_tasks, update_task
+from app.crud.task import (
+    create_task,
+    read_tasks,
+    read_task,
+    read_subtasks,
+    update_task,
+    delete_task,
+)
 
 router = APIRouter()
 
@@ -24,6 +31,17 @@ def read_task_endpoint(session: SessionDep, id: int):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Task not found",
+        )
+    return task
+
+
+@router.get("/{id}/subtasks", response_model=list[TaskResponse])
+def read_subtasks_endpoint(session: SessionDep, parent_id: int):
+    task = read_subtasks(session, parent_id)
+    if not task:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Subtasks not found",
         )
     return task
 
