@@ -14,7 +14,11 @@ from app.crud.task import (
 router = APIRouter()
 
 
-@router.post("/", response_model=TaskResponse)
+@router.post(
+    "/",
+    response_model=TaskResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 def create_task_endpoint(session: SessionDep, task: TaskCreate):
     return create_task(session, task)
 
@@ -57,7 +61,11 @@ def update_task_endpoint(session: SessionDep, id: int, task: TaskUpdate):
     return updated_task
 
 
-@router.delete("/{id}", response_model=TaskResponse)
+@router.delete(
+    "/{id}",
+    response_model=TaskResponse,
+    status_code=status.HTTP_204_NO_CONTENT,
+)
 def delete_task_endpoint(session: SessionDep, id: int):
     task = delete_task(session, id)
     if not task:
