@@ -63,14 +63,11 @@ def update_task_endpoint(session: SessionDep, id: int, task: TaskUpdate):
 
 @router.delete(
     "/{id}",
-    response_model=TaskResponse,
     status_code=status.HTTP_204_NO_CONTENT,
 )
 def delete_task_endpoint(session: SessionDep, id: int):
-    task = delete_task(session, id)
-    if not task:
+    if not delete_task(session, id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Task not found",
         )
-    return task
